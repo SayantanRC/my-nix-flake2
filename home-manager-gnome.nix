@@ -1,4 +1,4 @@
-{ config, pkgs, username, ... }:
+{ config, pkgs, unstablePkgs, username, ... }:
 
 {
   system.activationScripts.postSwitch = {
@@ -24,11 +24,12 @@
       videos         = "${config.users.users.${username}.home}/Videos";
     };
 
-    home.packages = with pkgs; [
+    home.packages = with unstablePkgs; [
       htop
       gthumb
       vscode
       meld
+      dconf-editor
     ];
   };
 }
