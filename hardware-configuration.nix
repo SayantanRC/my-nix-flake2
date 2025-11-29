@@ -23,6 +23,14 @@
       fsType = "vfat";
       options = [ "fmask=0077" "dmask=0077" ];
     };
+    
+  fileSystems."/mnt/linux_shared" = {
+    neededForBoot = false;
+    device = "/dev/disk/by-label/linux_shared";
+    fsType = "auto";
+    options = [ "nosuid" "nodev" "nofail" "x-gvfs-show" ];
+  };
+
 
   swapDevices = [ ];
 
