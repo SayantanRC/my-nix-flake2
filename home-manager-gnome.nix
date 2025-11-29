@@ -26,7 +26,9 @@
 
     home.packages = with pkgs; [
       htop
-      mate.caja
+      gthumb
+      vscode
+      meld
     ];
   };
 }
