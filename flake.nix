@@ -12,6 +12,7 @@
   outputs = { self, nixpkgs, unstable, home-manager, ... }:
     let
       system = "x86_64-linux";
+      username = "nightcore";
     in {
       nixosConfigurations = {
         nixos = nixpkgs.lib.nixosSystem {
@@ -25,17 +26,22 @@
               '';
             }
             
+            {
+              _module.args = {
+                inherit username;
+                unstablePkgs = import unstable {
+                  inherit system;
+                  config.allowUnfree = true;
+                };
+              };
+            }
+            
             ./hardware-configuration.nix
             
             ./configuration.nix
             ./flatpak.nix
             
-            (import ./unstable-packages.nix { 
-              unstablePkgs = import unstable {
-                inherit system;
-                config.allowUnfree = true;
-              };
-            })
+            ./unstable-packages.nix
             
             home-manager.nixosModules.home-manager
             
