@@ -100,6 +100,24 @@
     gnome-software
   ];
 
+  # Enable mounting without password
+  # https://nixos.wiki/wiki/Polkit#Reboot.2Fpoweroff_for_unprivileged_users
+  # https://bbs.archlinux.org/viewtopic.php?pid=2004103#p2004103
+  security.polkit.extraConfig = ''
+    polkit.addRule(function(action, subject) {
+      if (
+        subject.isInGroup("users")
+          && (
+            action.id == "org.freedesktop.udisks2.filesystem-mount-system" ||
+            action.id == "org.freedesktop.udisks2.filesystem-fstab"
+          )
+        )
+      {
+        return polkit.Result.YES;
+      }
+    })
+  '';
+
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;
