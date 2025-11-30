@@ -32,6 +32,14 @@
       dconf-editor
     ];
 
+    gtk = {
+      enable = true;
+      iconTheme = {
+        package = pkgs.papirus-icon-theme;
+        name = "Papirus-Dark";
+      };
+    };
+
     dconf.enable = true;
 
     dconf.settings = {
