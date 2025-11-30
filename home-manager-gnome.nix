@@ -33,13 +33,14 @@
       dconf-editor
       gnome-extension-manager
     ]) ++ (with pkgs; [
+      gjs
       gnomeExtensions.touchpad-gesture-customization
       gnomeExtensions.vitals
       gnomeExtensions.clipboard-history
       gnomeExtensions.app-icons-taskbar
       gnomeExtensions.just-perfection
       gnomeExtensions.caffeine
-      gnomeExtensions.desktop-icons-ng-ding
+      gnomeExtensions.gtk4-desktop-icons-ng-ding
       gnomeExtensions.transparent-top-bar-adjustable-transparency
       gnomeExtensions.emoji-copy
       gnomeExtensions.bluetooth-battery-meter
@@ -172,7 +173,7 @@
           "aztaskbar@aztaskbar.gitlab.com"
           "just-perfection-desktop@just-perfection"
           "caffeine@patapon.info"
-          "ding@rastersoft.com"
+          "gtk4-ding@smedius.gitlab.com"
           "transparent-top-bar@ftpix.com"
           "emoji-copy@felipeftn"
           "Bluetooth-Battery-Meter@maniacx.github.com"
@@ -253,10 +254,11 @@
         show-indicator = "only-active";
       };
 
-      "org/gnome/shell/extensions/ding" = {
+      "org/gnome/shell/extensions/gtk4-ding" = {
         dark-text-in-labels = false;
+        icon-size = "standard";
         show-home = false;
-        show-network-volumes = false;
+        show-network-volumes = true;
         show-trash = false;
         show-volumes = true;
         start-corner = "bottom-left";
