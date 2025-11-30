@@ -3,6 +3,7 @@
 {
   system.activationScripts.postSwitch = {
     text = ''
+      rm /home/${username}/.config/user-dirs.conf
       rm /home/${username}/.config/user-dirs.dirs
     '';
   };
