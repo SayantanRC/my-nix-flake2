@@ -32,6 +32,19 @@
       meld
       dconf-editor
       gnome-extension-manager
+      baobab
+      gnome-disk-utility
+      stress
+      pavucontrol
+      gsmartcontrol
+      pv
+      pciutils
+      lshw
+      libnotify
+      smartmontools
+      dig
+      x265
+      exiftool
     ]) ++ (with pkgs; [
       gjs
       gnomeExtensions.touchpad-gesture-customization
