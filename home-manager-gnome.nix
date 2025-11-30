@@ -1,4 +1,4 @@
-{ config, pkgs, unstablePkgs, username, ... }:
+{ config, pkgs, unstablePkgs, username, lib, ... }:
 
 {
   system.activationScripts.postSwitch = {
@@ -25,13 +25,30 @@
       videos         = "${config.users.users.${username}.home}/Videos";
     };
 
-    home.packages = with unstablePkgs; [
+    home.packages = (with unstablePkgs; [
       htop
       gthumb
       vscode
       meld
       dconf-editor
-    ];
+      gnome-extension-manager
+    ]) ++ (with pkgs; [
+      gnomeExtensions.touchpad-gesture-customization
+      gnomeExtensions.vitals
+      gnomeExtensions.clipboard-history
+      gnomeExtensions.app-icons-taskbar
+      gnomeExtensions.just-perfection
+      gnomeExtensions.caffeine
+      gnomeExtensions.desktop-icons-ng-ding
+      gnomeExtensions.transparent-top-bar-adjustable-transparency
+      gnomeExtensions.emoji-copy
+      gnomeExtensions.bluetooth-battery-meter
+      gnomeExtensions.blur-my-shell
+      gnomeExtensions.net-speed-simplified
+      gnomeExtensions.status-area-horizontal-spacing
+      gnomeExtensions.lilypad
+      gnomeExtensions.appindicator
+    ]);
 
     gtk = {
       enable = true;
@@ -69,9 +86,6 @@
           "scale-monitor-framebuffer"
           "xwayland-native-scaling"
         ];
-      };
-      "org/gnome/shell" = {
-        disable-user-extensions = false;
       };
       "org/gnome/desktop/sound" = {
         event-sounds = false;
@@ -146,6 +160,158 @@
         name = "Terminal";
         command = "kgx";
         binding = "<Super>t";
+      };
+
+      # ================================== extensions ===============================
+      "org/gnome/shell" = {
+        disable-user-extensions = false;
+        enabled-extensions = [
+          "touchpad-gesture-customization@coooolapps.com"
+          "Vitals@CoreCoding.com"
+          "clipboard-history@alexsaveau.dev"
+          "aztaskbar@aztaskbar.gitlab.com"
+          "just-perfection-desktop@just-perfection"
+          "caffeine@patapon.info"
+          "ding@rastersoft.com"
+          "transparent-top-bar@ftpix.com"
+          "emoji-copy@felipeftn"
+          "Bluetooth-Battery-Meter@maniacx.github.com"
+          "blur-my-shell@aunetx"
+          "netspeedsimplified@prateekmedia.extension"
+          "lilypad@shendrew.github.io"
+          "status-area-horizontal-spacing@mathematical.coffee.gmail.com"
+          "appindicatorsupport@rgcjonas.gmail.com"
+        ];
+      };
+      
+      "org/gnome/shell/extensions/touchpad-gesture-customization" = {
+        allow-minimize-window = true;
+        follow-natural-scroll = false;
+        overview-navigation-states = "CYCLIC";
+        vertical-swipe-3-fingers-gesture = "WINDOW_MANIPULATION";
+        vertical-swipe-4-fingers-gesture = "OVERVIEW_NAVIGATION";
+      };
+
+      "org/gnome/shell/extensions/vitals" = {
+        fixed-widths = true;
+        hot-sensors = [
+          "__temperature_max__"
+          "__fan_max__"
+        ];
+        icon-style = 0;
+        include-static-gpu-info = true;
+        show-battery = true;
+        show-fan = true;
+        show-gpu = true;
+        show-memory = true;
+        show-network = true;
+        show-processor = true;
+        show-storage = true;
+        show-system = true;
+        show-temperature = true;
+        show-voltage = true;
+        update-time = 1;
+      };
+
+      "org/gnome/shell/extensions/clipboard-history" = {
+        paste-on-selection = false;
+        toggle-private-mode = [];
+        topbar-preview-size = 30;
+        toggle-menu = [ "<Super>v" ];
+      };
+
+      "org/gnome/shell/extensions/aztaskbar" = {
+        click-action = "CYCLE";
+        dance-urgent = true;
+        favorites = true;
+        isolate-workspaces = false;
+        multi-window-indicator-style = "MULTI_DASH";
+        panel-location = "TOP";
+        peek-windows = false;
+        position-in-panel = "LEFT";
+        show-apps-button = lib.gvariant.mkTuple [ 
+          true 
+          (lib.gvariant.mkInt32 0) 
+        ];
+        tool-tips = true;
+        window-previews = false;
+        hide-dash = false;
+      };
+
+      "org/gnome/shell/extensions/just-perfection" = {
+        weather = false;
+        window-demands-attention-focus = true;
+        world-clock = false;
+        startup-status = 0;
+        quick-settings-airplane-mode = false;
+        quick-settings-dark-mode = false;
+        quick-settings-night-light = false;
+      };
+
+      "org/gnome/shell/extensions/caffeine" = {
+        indicator-position-max = 1;
+        show-indicator = "only-active";
+      };
+
+      "org/gnome/shell/extensions/ding" = {
+        dark-text-in-labels = false;
+        show-home = false;
+        show-network-volumes = false;
+        show-trash = false;
+        show-volumes = true;
+        start-corner = "bottom-left";
+      };
+
+      "com/ftpix/transparentbar" = {
+        transparency = 0;
+      };
+
+      "org/gnome/shell/extensions/emoji-copy" = {
+        always-show = true;
+        emoji-keybind = [ "<Super>Period" ];
+        active-keybind = true;
+      };
+
+      "org/gnome/shell/extensions/Bluetooth-Battery-Meter" = {
+        enable-battery-indicator = true;
+        enable-battery-level-text = true;
+        swap-icon-text = false;
+        enable-upower-level-icon = true;
+      };
+
+      "org/gnome/shell/extensions/blur-my-shell/panel" = {
+        blur = false;
+      };
+
+      "org/gnome/shell/extensions/netspeedsimplified" = {
+        chooseiconset = 2;
+        fontmode = 1;
+        hideindicator = false;
+        isvertical = true;
+        lockmouseactions = true;
+        minwidth = 5.0;
+        mode = 3;
+        refreshtime = 1.0;
+        togglebool = false;
+        wposext = 1;
+      };
+
+      "org/gnome/shell/extensions/status-area-horizontal-spacing" = {
+        hpadding = 4;
+      };
+
+      "org/gnome/shell/extensions/lilypad" = {
+        lilypad-order = [
+          "Clipboard_History_Indicator"
+          "emoji_copy"
+        ];
+        reorder = true;
+        rightbox-order = [
+          "ShowNetSpeedButton"
+          "lilypad"
+          "vitalsMenu"
+          "StatusNotifierItem"
+        ];
       };
     };
   };
