@@ -42,6 +42,8 @@
             ./flatpak.nix
             
             ./unstable-packages.nix
+
+            ./utils.nix
             
             home-manager.nixosModules.home-manager
             
