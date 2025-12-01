@@ -8,6 +8,24 @@
     '';
   };
 
+  environment.systemPackages = with pkgs; [
+    gjs
+    binutils
+    nautilus
+  ];
+  environment.sessionVariables = {
+    GI_TYPELIB_PATH = lib.makeSearchPath "lib/girepository-1.0" [
+      pkgs.gtk3
+    ];
+  };
+  # GSettings schemas of all apps are not made global unless they are declared here.
+  # Visible schemas paths can be seen by `echo $XDG_DATA_DIRS | tr ":" "\n"`
+  # Add the apps whose schemas are to be made global in this block.
+  # https://github.com/NixOS/nixpkgs/issues/33277#issuecomment-354714431
+  services.xserver.desktopManager.gnome.extraGSettingsOverridePackages = [
+    pkgs.nautilus
+  ];
+
   home-manager.users.${username} = {
     home.stateVersion = "25.05";
     
