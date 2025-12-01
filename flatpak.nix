@@ -9,4 +9,7 @@
       flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
     '';
   };
+  system.activationScripts.flatpakLink = ''
+    ln -sf ${pkgs.flatpak}/bin/flatpak /usr/bin/flatpak
+  '';
 }
