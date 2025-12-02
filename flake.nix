@@ -7,9 +7,13 @@
     
     home-manager.url = "github:nix-community/home-manager/release-25.05";
     home-manager.inputs.nixpkgs.follows = "unstable";
+
+    # For asus X13
+    # Found from commit history of https://github.com/NixOS/nixpkgs/commits/nixos-unstable/pkgs/os-specific/linux/kernel/kernels-org.json
+    nixpkgs-611.url = "github:NixOS/nixpkgs/4f8728c893b698b0285c57037323f783824b1e25";
   };
 
-  outputs = { self, nixpkgs, unstable, home-manager, ... }:
+  outputs = { self, nixpkgs, unstable, nixpkgs-611, home-manager, ... }:
     let
       system = "x86_64-linux";
       username = "nightcore";
@@ -56,8 +60,16 @@
         asusX13 = nixpkgs.lib.nixosSystem {
           inherit system;
           modules = baseModules ++ [
-            ({config, pkgs, ... }: {
-              boot.kernelPackages = pkgs.linuxPackages_6_12;
+            {
+              _module.args = {
+                pkgs611 = import nixpkgs-611 {
+                  inherit system;
+                };
+              };
+            }
+
+            ({config, pkgs, pkgs611, ... }: {
+              boot.kernelPackages = pkgs611.linuxPackages_6_11;
             })
           ];
         };
