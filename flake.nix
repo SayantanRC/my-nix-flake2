@@ -46,7 +46,20 @@
       nixosConfigurations = {
         nixos = nixpkgs.lib.nixosSystem {
           inherit system;
-          modules = baseModules;
+          modules = baseModules ++ [
+            ({config, pkgs, ... }: {
+              boot.kernelPackages = pkgs.linuxPackages_latest;
+            })
+          ];
+        };
+
+        asusX13 = nixpkgs.lib.nixosSystem {
+          inherit system;
+          modules = baseModules ++ [
+            ({config, pkgs, ... }: {
+              boot.kernelPackages = pkgs.linuxPackages_6_12;
+            })
+          ];
         };
       };
     };
