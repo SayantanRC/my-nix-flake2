@@ -355,6 +355,7 @@
           "emoji_copy"
         ];
         reorder = true;
+        auto-collapse = false;
         rightbox-order = [
           "ShowNetSpeedButton"
           "lilypad"
