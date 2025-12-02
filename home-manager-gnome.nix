@@ -26,6 +26,11 @@
     pkgs.nautilus
   ];
 
+  networking.firewall = rec {
+    allowedTCPPortRanges = [ { from = 1714; to = 1764; } ];
+    allowedUDPPortRanges = allowedTCPPortRanges;
+  };
+
   home-manager.users.${username} = {
     home.stateVersion = "25.05";
     
@@ -84,6 +89,7 @@
         { package = gnomeExtensions.status-area-horizontal-spacing; }
         { package = gnomeExtensions.lilypad; }
         { package = gnomeExtensions.appindicator; }
+        { package = pkgs.gnomeExtensions.gsconnect; }
       ];
     };
 
