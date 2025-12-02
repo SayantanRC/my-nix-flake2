@@ -118,6 +118,14 @@
     })
   '';
 
+  security.sudo.extraConfig = ''
+    ${username}	ALL=(root)	NOPASSWD: /run/current-system/sw/bin/nixos-rebuild
+  '';
+
+  environment.variables = {
+    EDITOR = "vim";
+  };
+
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;
