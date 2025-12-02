@@ -18,4 +18,10 @@
     unrar
     flameshot
   ];
+
+  programs.localsend = {
+    package = unstablePkgs.localsend;
+    enable = true;
+    openFirewall = true;
+  };
 }
