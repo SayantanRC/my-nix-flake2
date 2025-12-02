@@ -13,42 +13,40 @@
     let
       system = "x86_64-linux";
       username = "nightcore";
+      lib = nixpkgs.lib;
+
+      baseArgs = {
+        inherit username;
+        unstablePkgs = import unstable {
+          inherit system;
+          config.allowUnfree = true;
+        };
+      };
+
+      baseModules = [
+        ({ ... }: {
+          nix.extraOptions = ''
+            experimental-features = nix-command flakes
+          '';
+        })
+
+        ({ ... }: (let inherit baseArgs; in {
+          _module.args = baseArgs;
+        }))
+
+        ./hardware-configuration.nix
+        ./configuration.nix
+        ./flatpak.nix
+        ./unstable-packages.nix
+        ./utils.nix
+        home-manager.nixosModules.home-manager
+        (import ./home-manager-gnome.nix)
+      ];
     in {
       nixosConfigurations = {
         nixos = nixpkgs.lib.nixosSystem {
           inherit system;
-
-          modules = [
-          
-            {
-              nix.extraOptions = ''
-                experimental-features = nix-command flakes
-              '';
-            }
-            
-            {
-              _module.args = {
-                inherit username;
-                unstablePkgs = import unstable {
-                  inherit system;
-                  config.allowUnfree = true;
-                };
-              };
-            }
-            
-            ./hardware-configuration.nix
-            
-            ./configuration.nix
-            ./flatpak.nix
-            
-            ./unstable-packages.nix
-
-            ./utils.nix
-            
-            home-manager.nixosModules.home-manager
-            
-            (import ./home-manager-gnome.nix)
-          ];
+          modules = baseModules;
         };
       };
     };
