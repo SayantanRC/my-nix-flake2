@@ -21,6 +21,13 @@ let
 
     echo "==> Done."
   '';
+  fixflameshot = pkgs.writeShellScriptBin "fixflameshot" ''
+    #!/usr/bin/env bash
+    flameshot "$@"
+  '';
 in {
-  environment.systemPackages = [ nix-clean ];
+  environment.systemPackages = [ 
+    nix-clean
+    fixflameshot
+  ];
 }

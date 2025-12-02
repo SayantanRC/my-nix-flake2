@@ -16,5 +16,6 @@
     ntfs3g
     p7zip
     unrar
+    flameshot
   ];
 }

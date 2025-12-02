@@ -159,6 +159,9 @@
           "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/"
           "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4/"
           "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom5/"
+          "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom6/"
+          "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom7/"
+          "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom8/"
         ];
       };
 
@@ -191,6 +194,21 @@
         name = "Terminal";
         command = "kgx";
         binding = "<Super>t";
+      };
+      "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom6" = {
+        name = "Fullscreen screenshot";
+        command = "fixflameshot full -p ${config.users.users.${username}.home}/Pictures -c";
+        binding = "<Alt><Shift>s";
+      };
+      "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom7" = {
+        name = "Partial screenshot";
+        command = "fixflameshot gui -p ${config.users.users.${username}.home}/Pictures -c";
+        binding = "<Super><Shift>s";
+      };
+      "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom8" = {
+        name = "Full screenshot PrtScr";
+        command = "fixflameshot full -p ${config.users.users.${username}.home}/Pictures -c";
+        binding = "Print";
       };
 
       # ================================== extensions ===============================
