@@ -43,7 +43,7 @@
       videos         = "${config.users.users.${username}.home}/Videos";
     };
 
-    home.packages = (with unstablePkgs; [
+    home.packages = with unstablePkgs; [
       htop
       gthumb
       vscode
@@ -63,23 +63,29 @@
       dig
       x265
       exiftool
-    ]) ++ (with pkgs; [
-      gnomeExtensions.touchpad-gesture-customization
-      gnomeExtensions.vitals
-      gnomeExtensions.clipboard-history
-      gnomeExtensions.app-icons-taskbar
-      gnomeExtensions.just-perfection
-      gnomeExtensions.caffeine
-      gnomeExtensions.desktop-icons-ng-ding
-      gnomeExtensions.transparent-top-bar-adjustable-transparency
-      gnomeExtensions.emoji-copy
-      gnomeExtensions.bluetooth-battery-meter
-      gnomeExtensions.blur-my-shell
-      gnomeExtensions.net-speed-simplified
-      gnomeExtensions.status-area-horizontal-spacing
-      gnomeExtensions.lilypad
-      gnomeExtensions.appindicator
-    ]);
+    ];
+
+    programs.gnome-shell = {
+      enable = true;
+      extensions = with pkgs; [
+        { package = gnomeExtensions.gsconnect; }
+        { package = gnomeExtensions.touchpad-gesture-customization; }
+        { package = gnomeExtensions.vitals; }
+        { package = gnomeExtensions.clipboard-history; }
+        { package = gnomeExtensions.app-icons-taskbar; }
+        { package = gnomeExtensions.just-perfection; }
+        { package = gnomeExtensions.caffeine; }
+        { package = gnomeExtensions.desktop-icons-ng-ding; }
+        { package = gnomeExtensions.transparent-top-bar-adjustable-transparency; }
+        { package = gnomeExtensions.emoji-copy; }
+        { package = gnomeExtensions.bluetooth-battery-meter; }
+        { package = gnomeExtensions.blur-my-shell; }
+        { package = gnomeExtensions.net-speed-simplified; }
+        { package = gnomeExtensions.status-area-horizontal-spacing; }
+        { package = gnomeExtensions.lilypad; }
+        { package = gnomeExtensions.appindicator; }
+      ];
+    };
 
     gtk = {
       enable = true;
@@ -214,23 +220,6 @@
       # ================================== extensions ===============================
       "org/gnome/shell" = {
         disable-user-extensions = false;
-        enabled-extensions = [
-          "touchpad-gesture-customization@coooolapps.com"
-          "Vitals@CoreCoding.com"
-          "clipboard-history@alexsaveau.dev"
-          "aztaskbar@aztaskbar.gitlab.com"
-          "just-perfection-desktop@just-perfection"
-          "caffeine@patapon.info"
-          "ding@rastersoft.com"
-          "transparent-top-bar@ftpix.com"
-          "emoji-copy@felipeftn"
-          "Bluetooth-Battery-Meter@maniacx.github.com"
-          "blur-my-shell@aunetx"
-          "netspeedsimplified@prateekmedia.extension"
-          "lilypad@shendrew.github.io"
-          "status-area-horizontal-spacing@mathematical.coffee.gmail.com"
-          "appindicatorsupport@rgcjonas.gmail.com"
-        ];
       };
       
       "org/gnome/shell/extensions/touchpad-gesture-customization" = {
