@@ -73,6 +73,15 @@
             })
           ];
         };
+
+        thinkpad_X9_15 = nixpkgs.lib.nixosSystem {
+          inherit system;
+          modules = baseModules ++ [
+            ({config, pkgs, unstablePkgs, ... }: {
+              boot.kernelPackages = unstablePkgs.linuxPackages_latest;
+            })
+          ];
+        };
       };
     };
 }
